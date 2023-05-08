@@ -1,0 +1,17 @@
+sync:
+  defaults:
+    ignore:
+      vcs: true
+      paths:
+        - .DS_Store # macOS files
+    permissions:
+      defaultFileMode: 644
+      defaultDirectoryMode: 755
+  lefeuvre-proximity-sync:
+    alpha: "./symfony"
+    beta: "docker://lefeuvre-proximity-web-engine-1/home/docker"
+    mode: "two-way-resolved"
+    ignore:
+      paths:
+        - "/var/cache"
+        - "/bin/.phpunit"

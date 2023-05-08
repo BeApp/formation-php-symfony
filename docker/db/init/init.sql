@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `formation`;
+
+CREATE USER 'formation'@'%' IDENTIFIED BY 'formation';
+GRANT ALL PRIVILEGES ON *.* TO 'formation'@'%';
+FLUSH PRIVILEGES;
