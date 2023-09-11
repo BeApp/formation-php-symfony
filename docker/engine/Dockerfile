@@ -27,11 +27,11 @@ RUN docker-php-ext-install \
 # Images
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install gd exif
 
-RUN apk --update add --virtual .build-deps $PHPIZE_DEPS linux-headers \
-    && pecl install xdebug-3.2.0 \
-    && apk del -f .build-deps \
-    && touch /var/log/xdebug.log \
-    && chmod a+w /var/log/xdebug.log
+#RUN apk --update add --virtual .build-deps $PHPIZE_DEPS linux-headers \
+#    && pecl install xdebug-3.2.0 \
+#    && apk del -f .build-deps \
+#    && touch /var/log/xdebug.log \
+#    && chmod a+w /var/log/xdebug.log
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer --version=2.5.4 \
     && chmod +x /usr/local/bin/composer
