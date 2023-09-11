@@ -16,7 +16,7 @@ services:
   engine:
     container_name: app-formation-web-engine
 #    image: public.ecr.aws/a7b6b1u3/formation-php-hexaom:8.1.8-alpine
-    build: ./docker/dev/engine/
+    build: ./docker/engine/
     depends_on:
       - db
     volumes:
