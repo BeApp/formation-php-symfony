@@ -22,6 +22,10 @@ services:
     volumes:
       - ./symfony:/home/docker:cached
       - ./docker/engine/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+      # Sync
+      - vendor_volume:/home/docker/vendor
+      - var_volume:/home/docker/var
+      - node_modules_volume:/home/docker/node_modules
     working_dir: /home/docker
     networks:
       - default
@@ -39,6 +43,32 @@ services:
     volumes:
       - ./tmp/mariadb-10.4:/var/lib/mysql:rw
       - ./docker/db/init:/docker-entrypoint-initdb.d
+
+  vendor-sync:
+    networks:
+      default: {}
+    build:
+      context: .
+      dockerfile: ./docker/engine/sync-vendor/Dockerfile
+    container_name: app-formation-sync
+    hostname: sync
+    domainname: docker.local
+    volumes:
+      - vendor_volume:/app/vendor:ro
+      - var_volume:/app/var:ro
+      - node_modules_volume:/app/node_modules:ro
+      - ./symfony/vendor:/app/synced_vendor
+      - ./symfony/var:/app/synced_var
+      - ./symfony/node_modules:/app/synced_node_modules
+    command: ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+volumes:
+  vendor_volume:
+    driver: local
+  var_volume:
+    driver: local
+  node_modules_volume:
+    driver: local
 
 networks:
   default: {}

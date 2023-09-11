@@ -110,3 +110,4 @@ terraform.rc
 consumers/infra/lambda_function_payload.zip
 /symfony/config/packages/dev/twig.yaml
 /tmp
+symfony_bck
