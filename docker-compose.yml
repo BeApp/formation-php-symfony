@@ -20,7 +20,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./symfony:/home/docker:cached
+      - ./symfony:/home/docker
       - ./docker/engine/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       # Sync
       - vendor_volume:/home/docker/vendor
