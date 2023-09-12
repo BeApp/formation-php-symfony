@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
-use App\Controller\DTO\MovieConverter;
-use App\Controller\DTO\MovieDTO;
+use App\Controller\Api\DTO\MovieConverter;
 use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MonController extends AbstractController
+class MovieApiController extends AbstractController
 {
 
     public function __construct(private MovieRepository $movieRepository, private MovieConverter $movieConverter)

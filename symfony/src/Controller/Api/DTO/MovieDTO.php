@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\DTO;
+namespace App\Controller\Api\DTO;
 
 class MovieDTO
 {

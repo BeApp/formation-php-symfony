@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>{{ movie.title }}</h1>
+
+    <p>
+        <b>Catégories: </b>{{ movie.categories|map(c => c.title)|join(', ') }}
+{#        <b>Catégories: </b>{% for category in movie.categories %}{{ category.title }}, {% endfor %}#}
+    </p>
+    <p>
+        <b>Franchise: </b>{{ movie.franchise.name }}
+    </p>
+    <p>
+        {{ movie.synopsis }}
+    </p>
+</div>
+{% endblock %}
