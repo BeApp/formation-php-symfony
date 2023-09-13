@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MovieType extends AbstractType
 {
@@ -31,6 +32,7 @@ class MovieType extends AbstractType
             ->add('categories', null, [
                 'choice_label' => fn(Category $category) => $category->getTitle()
             ])
+            ->add('coverFile', VichFileType::class)
             ->add('save', SubmitType::class);
     }
 

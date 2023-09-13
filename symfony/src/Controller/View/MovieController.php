@@ -51,6 +51,8 @@ class MovieController extends AbstractController
             $movie = $form->getData();
             $movie->setCreatedBy('damien');
 
+
+
             $movie = $this->movieService->saveMovie($movie, true);
 
             return $this->redirectToRoute('app_movies');
