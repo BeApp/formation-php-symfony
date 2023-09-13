@@ -4,15 +4,18 @@ namespace App\Controller\Api;
 
 use App\Controller\Api\DTO\MovieConverter;
 use App\Entity\Movie;
-use App\Repository\MovieRepository;
+use App\Service\MovieNotFoundException;
+use App\Service\MovieService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MovieApiController extends AbstractController
 {
 
-    public function __construct(private MovieRepository $movieRepository, private MovieConverter $movieConverter)
+    public function __construct(private MovieService $movieService, private MovieConverter $movieConverter)
     {
     }
 
@@ -27,17 +30,27 @@ class MovieApiController extends AbstractController
     #[Route('/api/v1/movies', name: 'api_v1_movies')]
     public function retrieveMovies(): Response
     {
-        $movies = $this->movieRepository->findAll();
+        $movies = $this->movieService->getMovies();
 
 
         return $this->json(array_map(fn(Movie $movie) => $this->movieConverter->toDTO($movie), $movies));
     }
 
-    #[Route('/api/v1/movies/{categoryId}', name: 'api_v1_movie')]
-    public function retrieveMovie(int $categoryId): Response
+    /**
+     * @throws MovieNotFoundException
+     */
+    #[Route('/api/v1/movies/{movieId}/cover', name: 'api_v1_movie')]
+    public function uploadMovieCover(Request $request, int $movieId): Response
     {
-        $movies = $this->movieRepository->findByCategory($categoryId);
+        $movie = $this->movieService->getMovie($movieId);
 
-        return $this->json(array_map(fn(Movie $movie) => $this->movieConverter->toDTO($movie), $movies));
+        /** @var File $coverFile */
+        $coverFile = $request->files->get('cover');
+
+        $movie->setCoverFile($coverFile);
+
+        $this->movieService->saveMovie($movie, true);
+
+        return $this->json($this->movieConverter->toDTO($movie));
     }
 }
