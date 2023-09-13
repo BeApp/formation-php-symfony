@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class MovieController extends AbstractController
 {
@@ -34,7 +35,7 @@ class MovieController extends AbstractController
      */
     #[Route('/movies/new', name: 'app_movies_new')]
     #[Route('/movies/{movieId}/edit', name: 'app_movies_edit')]
-    public function new(Request $request, ?int $movieId): Response
+    public function new(Request $request, ?int $movieId, Security $security): Response
     {
         $this->denyAccessUnlessGranted(SecurityRoles::ROLE_ADMIN);
 
@@ -49,9 +50,7 @@ class MovieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Movie $movie */
             $movie = $form->getData();
-            $movie->setCreatedBy('damien');
-
-
+            $movie->setCreatedBy($security->getUser()->getUserIdentifier());
 
             $movie = $this->movieService->saveMovie($movie, true);
 

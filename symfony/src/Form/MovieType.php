@@ -32,7 +32,9 @@ class MovieType extends AbstractType
             ->add('categories', null, [
                 'choice_label' => fn(Category $category) => $category->getTitle()
             ])
-            ->add('coverFile', VichFileType::class)
+            ->add('coverFile', VichFileType::class, [
+                'required' => false
+            ])
             ->add('save', SubmitType::class);
     }
 
