@@ -4,9 +4,9 @@ namespace App\Controller\View;
 
 use App\Entity\Movie;
 use App\Form\MovieType;
-use App\Repository\MovieRepository;
 use App\Service\MovieNotFoundException;
 use App\Service\MovieService;
+use App\Service\SecurityRoles;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +36,8 @@ class MovieController extends AbstractController
     #[Route('/movies/{movieId}/edit', name: 'app_movies_edit')]
     public function new(Request $request, ?int $movieId): Response
     {
+        $this->denyAccessUnlessGranted(SecurityRoles::ROLE_ADMIN);
+
         $movie = null;
         if ($movieId !== null) {
             $movie = $this->movieService->getMovie($movieId);
