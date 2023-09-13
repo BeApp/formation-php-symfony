@@ -46,6 +46,19 @@ class Movie
         $this->categories = new ArrayCollection();
     }
 
+    public static function build(string $title, string $synopsis, Franchise $franchise, Collection $categories, string $createdBy): self
+    {
+        $entity = new self();
+        $entity->setTitle($title);
+        $entity->setSynopsis($synopsis);
+        $entity->setFranchise($franchise);
+        foreach ($categories as $category) {
+            $entity->addCategory($category);
+        };
+        $entity->setCreatedBy($createdBy);
+        return $entity;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;

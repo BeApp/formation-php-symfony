@@ -29,6 +29,12 @@ class Category
         $this->movies = new ArrayCollection();
     }
 
+    public static function build(string $title) {
+        $entity = new static();
+        $entity->setTitle($title);
+        return $entity;
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;

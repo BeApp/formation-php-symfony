@@ -28,6 +28,12 @@ class Franchise
         $this->movies = new ArrayCollection();
     }
 
+    public static function build(string $name) {
+        $entity = new static();
+        $entity->setName($name);
+        return $entity;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
